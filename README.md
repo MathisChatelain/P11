@@ -49,3 +49,13 @@
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
+    Using tests :
+     ```
+        pytest tests
+     ```
+
+6. Understanding the project
+
+    Naming conventions : 
+        - views/routes are named using camelCase
+        - actions/functions are named using snake_case
