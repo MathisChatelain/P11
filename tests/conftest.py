@@ -20,10 +20,10 @@ def app():
 
 
 @pytest.fixture()
-def client(app):
+def client(app: Flask):
     return app.test_client()
 
 
 @pytest.fixture()
-def runner(app):
+def runner(app: Flask):
     return app.test_cli_runner()

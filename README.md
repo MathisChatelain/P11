@@ -49,3 +49,16 @@
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
+    Test coverage run :
+    coverage run -m pytest .
+    coverage report
+
+    Test coverage gutters :
+    in VSCode with extension coverage gutters you can show test coverage directly in the code
+    after generating a coverage.xml file with : python -m pytest --cov=. --cov-report=xml tests
+    using this shortcut -> ctrl + shit + è
+
+6. Running
+   
+   python server.py ( allow easier testing and simple debug mode )
+
