@@ -40,6 +40,10 @@ def showSummary():
         # [TODO] : We should implement this case if it is possible that clubs share an email
         msg = "We found multiple clubs with this email"
         return render_template("index.html", club_not_found_error_message=msg)
+    loggedInClub = [club for club in clubs if club["email"] == request.form["email"]][0]
+    return render_template(
+        "welcome.html", club=loggedInClub, competitions=competitions, clubs=clubs
+    )
 
 
 @app.route("/book/<competition>/<club>")
