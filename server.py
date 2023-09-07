@@ -31,8 +31,12 @@ def showSummary():
     clubs_by_email = [club for club in clubs if club["email"] == request.form["email"]]
     len_clubs_by_email = len(clubs_by_email)
     if len_clubs_by_email == 1:
-        club = clubs_by_email[0]
-        return render_template("welcome.html", club=club, competitions=competitions)
+        loggedInClub = [
+            club for club in clubs if club["email"] == request.form["email"]
+        ][0]
+        return render_template(
+            "welcome.html", club=loggedInClub, competitions=competitions, clubs=clubs
+        )
     elif len_clubs_by_email == 0:
         msg = "We couldn't find any club with this email"
         return render_template("index.html", club_not_found_error_message=msg)
@@ -40,10 +44,6 @@ def showSummary():
         # [TODO] : We should implement this case if it is possible that clubs share an email
         msg = "We found multiple clubs with this email"
         return render_template("index.html", club_not_found_error_message=msg)
-    loggedInClub = [club for club in clubs if club["email"] == request.form["email"]][0]
-    return render_template(
-        "welcome.html", club=loggedInClub, competitions=competitions, clubs=clubs
-    )
 
 
 @app.route("/book/<competition>/<club>")

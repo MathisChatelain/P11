@@ -19,6 +19,11 @@ def app():
 
 
 @pytest.fixture()
+def clubs():
+    return [{"name": "club1", "email": "mail1"}, {"name": "club2", "email": "mail2"}]
+
+
+@pytest.fixture()
 def client(app: Flask):
     return app.test_client()
 
