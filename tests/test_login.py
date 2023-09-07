@@ -1,6 +1,11 @@
 from unittest.mock import patch
 
 
+def test_index(client):
+    response = client.get("/")
+    assert response.status_code == 200
+
+
 def test_show_summary_with_valid_email(client):
     with patch(
         "server.clubs",
