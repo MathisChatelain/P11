@@ -28,8 +28,18 @@ def index():
 
 @app.route("/showSummary", methods=["POST"])
 def showSummary():
-    club = [club for club in clubs if club["email"] == request.form["email"]][0]
-    return render_template("welcome.html", club=club, competitions=competitions)
+    clubs_by_email = [club for club in clubs if club["email"] == request.form["email"]]
+    len_clubs_by_email = len(clubs_by_email)
+    if len_clubs_by_email == 1:
+        club = clubs_by_email[0]
+        return render_template("welcome.html", club=club, competitions=competitions)
+    elif len_clubs_by_email == 0:
+        msg = "We couldn't find any club with this email"
+        return render_template("index.html", club_not_found_error_message=msg)
+    else:
+        # [TODO] : We should implement this case if it is possible that clubs share an email
+        msg = "We found multiple clubs with this email"
+        return render_template("index.html", club_not_found_error_message=msg)
 
 
 @app.route("/book/<competition>/<club>")
