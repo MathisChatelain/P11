@@ -1,18 +1,17 @@
 import pytest
 from flask import Flask
+from server import app as server_app
 
 
 @pytest.fixture()
 def app():
-    app = Flask(__name__)
+    app = server_app
     app.secret_key = "something_special"
     app.config.update(
         {
             "TESTING": True,
         }
     )
-
-    # other setup can go here
 
     yield app
 
