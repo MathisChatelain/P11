@@ -5,8 +5,8 @@ from unittest.mock import patch
 
 def test_purchasePlaces_valid_request(client):
     # Mock data
-    competitions = [{"name": "Competition1", "numberOfPlaces": 10}]
-    clubs = [{"name": "Club1", "points": 20}]
+    competitions = [{"name": "Competition1", "numberOfPlaces": 10, "places": {}}]
+    clubs = [{"name": "Club1", "points": 20, "email": "mail1"}]
 
     with patch("server.clubs", clubs), patch("server.competitions", competitions):
         response = client.post(
@@ -19,8 +19,8 @@ def test_purchasePlaces_valid_request(client):
 
 def test_purchasePlaces_invalid_places(client):
     # Mock data
-    competitions = [{"name": "Competition1", "numberOfPlaces": 10}]
-    clubs = [{"name": "Club1", "points": 20}]
+    competitions = [{"name": "Competition1", "numberOfPlaces": 10, "places": {}}]
+    clubs = [{"name": "Club1", "points": 20, "email": "mail1"}]
 
     with patch("server.clubs", clubs), patch("server.competitions", competitions):
         response = client.post(
@@ -33,8 +33,8 @@ def test_purchasePlaces_invalid_places(client):
 
 def test_purchasePlaces_not_enough_points(client):
     # Mock data
-    competitions = [{"name": "Competition1", "numberOfPlaces": 10}]
-    clubs = [{"name": "Club1", "points": 5}]
+    competitions = [{"name": "Competition1", "numberOfPlaces": 10, "places": {}}]
+    clubs = [{"name": "Club1", "points": 5, "email": "mail1"}]
 
     with patch("server.clubs", clubs), patch("server.competitions", competitions):
         response = client.post(
@@ -47,8 +47,8 @@ def test_purchasePlaces_not_enough_points(client):
 
 def test_purchasePlaces_not_enough_places(client):
     # Mock data
-    competitions = [{"name": "Competition1", "numberOfPlaces": 5}]
-    clubs = [{"name": "Club1", "points": 20}]
+    competitions = [{"name": "Competition1", "numberOfPlaces": 5, "places": {}}]
+    clubs = [{"name": "Club1", "points": 20, "email": "mail1"}]
 
     with patch("server.clubs", clubs), patch("server.competitions", competitions):
         response = client.post(

@@ -49,6 +49,7 @@ def showSummary():
 @app.route("/book/<competition>/<club>")
 def book(competition, club):
     foundClubs = [c for c in clubs if c["name"] == club]
+
     if len(foundClubs) == 0:
         flash(
             "You tried to manually access a club that does not exist, please use list below"
@@ -57,6 +58,7 @@ def book(competition, club):
     if len(foundClubs) > 1:
         flash("There are multiple clubs with this name, please use list below")
         return render_template("welcome.html", club=club, competitions=competitions)
+
     foundClub = foundClubs[0]
     foundCompetition = [c for c in competitions if c["name"] == competition][0]
     if foundClub and foundCompetition:
@@ -81,6 +83,7 @@ def purchasePlaces():
     if placesRequired <= 0:
         flash("You must purchase at least one place")
         return render_template("booking.html", club=club, competition=competition)
+
     # We need to store the number of places booked by each club
     placesBookedByClub = competition["places"].get(club["email"], 0)
     if (placesBookedByClub + placesRequired) > 12:
