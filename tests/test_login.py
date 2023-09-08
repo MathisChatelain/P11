@@ -1,9 +1,16 @@
 from unittest.mock import patch
 
+### UNIT TESTS ###
+
 
 def test_index(client):
     response = client.get("/")
     assert response.status_code == 200
+
+
+def test_redirect_to_index_after_logout(client):
+    response = client.get("/logout")
+    assert response.status_code == 302
 
 
 def test_show_summary_with_valid_email(client):

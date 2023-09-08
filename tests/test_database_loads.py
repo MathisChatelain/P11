@@ -1,5 +1,7 @@
 from server import loadClubs, loadCompetitions
 
+### UNIT TESTS ###
+
 
 def test_load_competitions():
     competitions = loadCompetitions()
