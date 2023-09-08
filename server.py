@@ -81,6 +81,13 @@ def purchasePlaces():
     if placesRequired <= 0:
         flash("You must purchase at least one place")
         return render_template("booking.html", club=club, competition=competition)
+    # We need to store the number of places booked by each club
+    placesBookedByClub = competition["places"].get(club["email"], 0)
+    if (placesBookedByClub + placesRequired) > 12:
+        flash(
+            f"You cannot book more than 12 places for a competition, you already have {placesBookedByClub} places booked for this competition"
+        )
+        return render_template("booking.html", club=club, competition=competition)
 
     if placesRequired > clubPoints:
         flash("Sorry, you do not have enough points")
