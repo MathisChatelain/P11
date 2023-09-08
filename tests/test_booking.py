@@ -32,6 +32,42 @@ def test_book_invalid_route(client):
     assert response.status_code == 200
 
 
+def test_book_invalid_route_competition_error(client):
+    # Mock data
+    clubs = [{"name": "Club1", "email": "mail1"}, {"name": "Club2", "email": "mail2"}]
+    competitions = [
+        {"name": "Competition1", "numberOfPlaces": "10"},
+        {"name": "Competition2", "numberOfPlaces": "4"},
+    ]
+
+    with patch("server.clubs", clubs), patch("server.competitions", competitions):
+        response = client.get("/book/Competition3/Club1")
+
+    assert (
+        b"You tried to manually access a competition that does not exist, please use list below"
+        in response.data
+    )
+    assert response.status_code == 200
+
+
+def test_book_invalid_route_too_many_competitions_error(client):
+    # Mock data
+    clubs = [{"name": "Club1", "email": "mail1"}, {"name": "Club2", "email": "mail2"}]
+    competitions = [
+        {"name": "Competition3", "numberOfPlaces": "10"},
+        {"name": "Competition3", "numberOfPlaces": "4"},
+    ]
+
+    with patch("server.clubs", clubs), patch("server.competitions", competitions):
+        response = client.get("/book/Competition3/Club1")
+
+    assert (
+        b"There are multiple competitions with this name, please use list below"
+        in response.data
+    )
+    assert response.status_code == 200
+
+
 def test_book_invalid_to_many_clubs(client):
     # Mock data
     clubs = [{"name": "Club1", "email": "mail1"}, {"name": "Club1", "email": "mail2"}]

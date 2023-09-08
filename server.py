@@ -60,14 +60,17 @@ def book(competition, club):
         return render_template("welcome.html", club=club, competitions=competitions)
 
     foundClub = foundClubs[0]
-    foundCompetition = [c for c in competitions if c["name"] == competition][0]
-    if foundClub and foundCompetition:
-        return render_template(
-            "booking.html", club=foundClub, competition=foundCompetition
+    foundCompetitions = [c for c in competitions if c["name"] == competition]
+    if len(foundCompetitions) == 0:
+        flash(
+            "You tried to manually access a competition that does not exist, please use list below"
         )
-    else:
-        flash("Something went wrong-please try again")
         return render_template("welcome.html", club=club, competitions=competitions)
+    if len(foundCompetitions) > 1:
+        flash("There are multiple competitions with this name, please use list below")
+        return render_template("welcome.html", club=club, competitions=competitions)
+    foundCompetition = foundCompetitions[0]
+    return render_template("booking.html", club=foundClub, competition=foundCompetition)
 
 
 @app.route("/purchasePlaces", methods=["POST"])
