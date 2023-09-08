@@ -9,12 +9,14 @@
         {
             "name": "Fall Classic",
             "date": "2020-10-22 13:30:00",
-            "numberOfPlaces": "13"
+            "numberOfPlaces": "13",
+            "places": {}
         },
         {
             "name": "Winter Classic",
             "date": "2024-12-22 13:30:00",
-            "numberOfPlaces": "17"
+            "numberOfPlaces": "17",
+            "places": {}
         }
     ]
 }

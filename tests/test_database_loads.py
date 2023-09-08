@@ -5,7 +5,7 @@ from server import loadClubs, loadCompetitions
 
 def test_load_competitions():
     competitions = loadCompetitions()
-    assert len(competitions) == 2
+    assert len(competitions) == 3
     assert type(competitions) == list
     assert type(competitions[0]) == dict
 
