@@ -12,6 +12,23 @@
         <input type="email" name="email" id=""/>
         <button type="submit">Enter</button>
     </form>
+    <h1>Liste des clubs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom du club</th>
+                <th>Nombre de points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+                <tr>
+                    <td>{{ club['name'] }}</td>
+                    <td>{{ club['points'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <p>{{ club_not_found_error_message }}</p>
 </body>
 </html>

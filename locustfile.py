@@ -41,13 +41,6 @@ class MyLocustUserWorstPath(HttpUser):
             club = "Simply Lift"
             self.client.get(f"/book/{competition}/{club}")
 
-    @task
-    def logout_with_parameters(self):
-        # Define a task to logout with parameters in the URL
-        self.client.get(
-            "/logout/?=randomkeywords/?=wrongurls/",
-        )
-
 
 class MyLocustLoadHeavyPath(HttpUser):
     # this user will be focused solely on the booking page in order to test db load times

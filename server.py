@@ -3,14 +3,18 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 from datetime import datetime
 
 
-def loadClubs():
-    with open("clubs.json") as c:
+def loadClubs(use_mock_data=False):
+    json_file = "clubs.json" if not use_mock_data else "mock_clubs_unique.json"
+    with open(json_file) as c:
         listOfClubs = json.load(c)["clubs"]
         return listOfClubs
 
 
-def loadCompetitions():
-    with open("competitions.json") as comps:
+def loadCompetitions(use_mock_data=False):
+    json_file = (
+        "competitions.json" if not use_mock_data else "mock_competitions_unique.json"
+    )
+    with open(json_file) as comps:
         listOfCompetitions = json.load(comps)["competitions"]
         for comp in listOfCompetitions:
             comp["isCurrent"] = (
@@ -22,13 +26,19 @@ def loadCompetitions():
 app = Flask(__name__)
 app.secret_key = "something_special"
 
-competitions = loadCompetitions()
-clubs = loadClubs()
+competitions = loadCompetitions(use_mock_data=True)
+clubs = loadClubs(use_mock_data=True)
+page_size = 10
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    page = request.args.get("page", default=0, type=int)
+    if page < 0:
+        paginated_clubs = clubs[(page - 1) * page_size : page * page_size]
+    else:
+        paginated_clubs = clubs[page * page_size : (page + 1) * page_size]
+    return render_template("index.html", clubs=paginated_clubs, page=page)
 
 
 @app.route("/showSummary", methods=["POST"])
