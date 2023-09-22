@@ -8,6 +8,22 @@ def test_index(client):
     assert response.status_code == 200
 
 
+def test_list_clubs(client):
+    with patch(
+        "server.clubs",
+        [{"name": "club1", "email": "mail1", "points": "13"}],
+    ):
+        response = client.get("/clubs_list")
+        assert "club1" in str(response.data)
+        assert "13" in str(response.data)
+        assert response.status_code == 200
+
+
+def test_list_clubs_and_pagination(client):
+    response = client.get("/clubs_list", data={"page": 2})
+    assert response.status_code == 200
+
+
 def test_redirect_to_index_after_logout(client):
     response = client.get("/logout")
     assert response.status_code == 302

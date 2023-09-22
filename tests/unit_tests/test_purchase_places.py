@@ -76,7 +76,9 @@ def test_purchasePlaces_trying_to_buy_to_much_places_in_total(client):
             data={"competition": "Competition1", "club": "Club1", "places": "10"},
         )
 
-    assert b"you already have 12 places booked for this competition" in response.data
+    assert (
+        b"you already have too many places booked for this competition" in response.data
+    )
     assert b"You cannot book more than 12 places for a competition" in response.data
     assert response.status_code == 200
 
@@ -92,6 +94,8 @@ def test_purchasePlaces_trying_to_buy_to_much_places(client):
             data={"competition": "Competition1", "club": "Club1", "places": "13"},
         )
 
-    assert b"you already have 0 places booked for this competition" in response.data
+    assert (
+        b"you already have too many places booked for this competition" in response.data
+    )
     assert b"You cannot book more than 12 places for a competition" in response.data
     assert response.status_code == 200

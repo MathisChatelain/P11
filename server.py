@@ -33,12 +33,17 @@ page_size = 10
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+
+@app.route("/clubs_list")
+def clubs_list():
     page = request.args.get("page", default=0, type=int)
     if page < 0:
         paginated_clubs = clubs[(page - 1) * page_size : page * page_size]
     else:
         paginated_clubs = clubs[page * page_size : (page + 1) * page_size]
-    return render_template("index.html", clubs=paginated_clubs, page=page)
+    return render_template("clubs.html", clubs=paginated_clubs, page=page)
 
 
 @app.route("/showSummary", methods=["POST"])
@@ -106,7 +111,7 @@ def purchasePlaces():
     placesBookedByClub = competition["places"].get(club["email"], 0)
     if (placesBookedByClub + placesRequired) > 12:
         flash(
-            f"You cannot book more than 12 places for a competition, you already have {placesBookedByClub} places booked for this competition"
+            f"You cannot book more than 12 places for a competition, you already have too many places booked for this competition"
         )
         return render_template("booking.html", club=club, competition=competition)
 
